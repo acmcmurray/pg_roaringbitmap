@@ -2062,7 +2062,6 @@ Datum
 rb_runoptimize(PG_FUNCTION_ARGS) {
     bytea *serializedbytes = PG_GETARG_BYTEA_P(0);
     roaring_bitmap_t *r;
-    bool optimized;
     size_t expectedsize;
 
     r = roaring_bitmap_portable_deserialize(VARDATA(serializedbytes));
@@ -2071,7 +2070,7 @@ rb_runoptimize(PG_FUNCTION_ARGS) {
                 (errcode(ERRCODE_NULL_VALUE_NOT_ALLOWED),
                         errmsg("bitmap format is error")));
 
-    optimized = roaring_bitmap_run_optimize(r);
+    roaring_bitmap_run_optimize(r);
 
     expectedsize = roaring_bitmap_portable_size_in_bytes(r);
     serializedbytes = (bytea *) palloc(VARHDRSZ + expectedsize);

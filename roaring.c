@@ -1,5 +1,5 @@
 // !!! DO NOT EDIT - THIS IS AN AUTO-GENERATED FILE !!!
-// Created by amalgamation.sh on 2023-09-27T16:30:23Z
+// Created by amalgamation.sh on 2023-10-08T18:43:27Z
 
 /*
  * The CRoaring project is under a dual license (Apache/MIT).
@@ -16409,7 +16409,11 @@ return  ROARING_SUPPORTS_AVX2 | ROARING_SUPPORTS_AVX512;
 #elif defined(__AVX2__)
 
 int croaring_hardware_support(void) {
-static int support = 0xFFFFFFF;
+static
+#if CROARING_ATOMIC_IMPL == CROARING_ATOMIC_IMPL_C
+_Atomic
+#endif
+int support = 0xFFFFFFF;
 if(support == 0xFFFFFFF) {
 bool avx512_support = false;
 #if CROARING_COMPILER_SUPPORTS_AVX512
@@ -16423,7 +16427,11 @@ return support;
 #else
 
 int croaring_hardware_support(void) {
-static int support = 0xFFFFFFF;
+static
+#if CROARING_ATOMIC_IMPL == CROARING_ATOMIC_IMPL_C
+_Atomic
+#endif
+int support = 0xFFFFFFF;
 if(support == 0xFFFFFFF) {
 bool has_avx2 = (croaring_detect_supported_architectures() & CROARING_AVX2) == CROARING_AVX2;
 bool has_avx512 = false;

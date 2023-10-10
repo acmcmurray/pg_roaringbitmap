@@ -3,7 +3,7 @@
    "abstract": "A Roaring Bitmap data type",
    "description": "This library contains a single PostgreSQL extension, a Roaring Bitmap data type called 'roaringbitmap', along with some convenience opperators and functions for constructing and handling Roaring Bitmap.",
    "version": "0.6.0",
-   "croaring_version": "2.0.2",
+   "croaring_version": "2.0.3",
    "license": "apache_2_0",
    "provides": {
       "pg_roaringbitmap": {

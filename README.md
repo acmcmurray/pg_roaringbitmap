@@ -1,8 +1,8 @@
 # pg_roaringbitmap
 RoaringBitmap extension for PostgreSQL.
 
-It's initial based on https://github.com/zeromax007/gpdb-roaringbitmap.
-
+It's initially based on https://github.com/zeromax007/gpdb-roaringbitmap
+and later forked from https://github.com/ChenHuajun/pg_roaringbitmap
 
 # Introduction
 Roaring bitmaps are compressed bitmaps which tend to outperform conventional compressed bitmaps such as WAH, EWAH or Concise. In some instances, roaring bitmaps can be hundreds of times faster and they often offer significantly better compression. They can even be faster than uncompressed bitmaps. More information https://github.com/RoaringBitmap/CRoaring .

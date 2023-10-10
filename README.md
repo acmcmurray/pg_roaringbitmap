@@ -27,34 +27,6 @@ Note:You can use `make -f Makefile_native` instead of` make` to let the compiler
 
 	make installcheck
 
-# Build on PostgreSQL 9.x or Greenplum 6.0
-
-Parallel execution is not supported in PostgreSQL 9.5 and earlier.
-If you want to compile on these early PostgreSQL versions or Greenplum 6.0(based on PostgreSQL 9.4), you need to remove the `PARALLEL` keyword from these SQL files.
-
-    cd pg_roaringbitmap
-    sed 's/PARALLEL SAFE//g' -i roaringbitmap--*.sql
-    sed -z 's/,[ \r\n]*PARALLEL = SAFE//g' -i roaringbitmap--*.sql
-
-Then refer to [Build] above for building, such as the steps to build on Greenplum 6.0:
-
-## Build
-
-    su - gpadmin
-    make
-    make install
-    psql -c "create extension roaringbitmap"
-
-## Test
-
-    sudo yum install 'perl(Data::Dumper)'
-    make installcheck
-
-Since the expected output is based on PostgreSQL 10+, this test will not pass.
-Check the difference in the output file. If the execution results are the same, only the execution plan or other content that is not related to pg_roaringbitmap` is different, the test can be considered OK.
-
-    diff results/roaringbitmap.out expected/roaringbitmap_gpdb6.out
-
 # Usage
 
 ## about roaringbitmap data type

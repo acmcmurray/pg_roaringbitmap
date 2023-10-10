@@ -115,6 +115,29 @@ or
 
 	SELECT rb_iterate('{1,2,3}'::roaringbitmap);
 
+
+| Operator | Input                          | Output          | Desc                         | Example                                                        | Result            |
+|----------|--------------------------------|-----------------|------------------------------|----------------------------------------------------------------|-------------------|
+| &        | `roaringbitmap, roaringbitmap` | `roaringbitmap` | bitwise AND                  | `roaringbitmap('{1, 2, 3}') & roaringbitmap('{3, 4, 5}')`      | `{3}`             |
+| &#124;   | `roaringbitmap, roaringbitmap` | `roaringbitmap` | bitwise OR                   | `roaringbitmap('{1, 2, 3}') &#124; roaringbitmap('{3, 4, 5}')` | `{1, 2, 3, 4, 5}` |                       
+| &#124;   | `roaringbitmap, integer`       | `roaringbitmap` | add element to roaringbitmap | `roaringbitmap('{1, 2, 3}') &#124; 6`                          | `{1, 2, 3, 6}`    | 
+| &#124;   | `integer, roaringbitmap`       | `roaringbitmap` | add element to roaringbitmap | `6  &#124; roaringbitmap('{1, 2, 3}')`                         | `{1, 2, 3, 6}`    | 
+| #        | `roaringbitmap, roaringbitmap` | `roaringbitmap` | bitwise XOR	              | `roaringbitmap('{1, 2, 3}') # roaringbitmap('{3, 4, 5}')`      | `{1, 2, 4, 5}`    |
+
+<<	roaringbitmap, bigint	roaringbitmap	bitwise shift left	roaringbitmap('{1,2,3}') << 2	{0,1}
+>>	roaringbitmap, bigint	roaringbitmap	bitwise shift right	roaringbitmap('{1,2,3}') >> 3	{4,5,6}
+-	roaringbitmap, roaringbitmap	roaringbitmap	difference(bitwise ANDNOT)	roaringbitmap('{1,2,3}') - roaringbitmap('{3,4,5}')	{1,2}
+-	roaringbitmap, integer	roaringbitmap	remove element from roaringbitmap	roaringbitmap('{1,2,3}') - 3	{1,2}
+     @>	roaringbitmap, roaringbitmap	bool	contains	roaringbitmap('{1,2,3}') @> roaringbitmap('{3,4,5}')	f
+     @>	roaringbitmap,integer	bool	contains	roaringbitmap('{1,2,3,4,5}') @> 3	t
+     <@	roaringbitmap, roaringbitmap	bool	is contained by	roaringbitmap('{1,2,3}') <@ roaringbitmap('{3,4,5}')	f
+     <@	integer, roaringbitmap	bool	is contained by	3 <@ roaringbitmap('{3,4,5}')	t
+     &&	roaringbitmap,roaringbitmap	bool	overlap (have elements in common)	roaringbitmap('{1,2,3}') && roaringbitmap('{3,4,5}')	t
+     =	roaringbitmap, roaringbitmap	bool	equal	roaringbitmap('{1,2,3}') = roaringbitmap('{3,4,5}')	f
+     <>	roaringbitmap,roaringbitmap	bool	not equal	roaringbitmap('{1,2,3}') <> roaringbitmap('{3,4,5}')	t
+
+
+
 ## Operator List
 <table>
     <thead>

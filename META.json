@@ -3,9 +3,7 @@
    "abstract": "A Roaring Bitmap data type",
    "description": "This library contains a single PostgreSQL extension, a Roaring Bitmap data type called 'roaringbitmap', along with some convenience opperators and functions for constructing and handling Roaring Bitmap.",
    "version": "0.6.0",
-   "maintainer": [
-      "Chen Huajun <chjischj@163.com>"
-   ],
+   "croaring_version": "2.0.2",
    "license": "apache_2_0",
    "provides": {
       "pg_roaringbitmap": {
@@ -17,15 +15,14 @@
    },
    "resources": {
       "bugtracker": {
-         "web": "http://github.com/ChenHuajun/pg_roaringbitmap/issues/"
+         "web": "http://github.com/BrandwatchLtd/pg_roaringbitmap/issues/"
       },
       "repository": {
-        "url":  "git://github.com/ChenHuajun/pg_roaringbitmap.git",
-        "web":  "http://github.com/ChenHuajun/pg_roaringbitmap/",
+        "url":  "git://github.com/BrandwatchLtd/pg_roaringbitmap.git",
+        "web":  "http://github.com/BrandwatchLtd/pg_roaringbitmap/",
         "type": "git"
       }
    },
-   "generated_by": "Chen Huajun",
    "meta-spec": {
       "version": "1.0.0",
       "url": "http://pgxn.org/meta/spec.txt"

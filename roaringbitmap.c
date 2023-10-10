@@ -23,7 +23,22 @@ static const struct config_enum_entry output_format_options[] =
 
 static int	rbitmap_output_format;		/* output format */
 
+void *		pg_aligned_malloc(size_t alignment, size_t size);
+void		pg_aligned_free(void *memblock);
+void*		pg_realloc(void* p, size_t new_sz);
+void*		pg_calloc(size_t n_elements, size_t element_size);
+void        pg_free(void* p);
 void		_PG_init(void);
+
+static roaring_memory_t pg_global_memory_hook = {
+        .malloc = palloc,
+        .realloc = pg_realloc,
+        .calloc = pg_calloc,
+        .free = pg_free,
+        .aligned_malloc = pg_aligned_malloc,
+        .aligned_free = pg_aligned_free,
+};
+
 /*
  * Module load callback
  */
@@ -42,8 +57,45 @@ _PG_init(void)
 							 NULL,
 							 NULL,
 							 NULL);
+    roaring_init_memory_hook(pg_global_memory_hook);
 }
 
+void *
+pg_aligned_malloc(size_t alignment, size_t size) {
+    void *p;
+    void *porg;
+    assert(alignment <= 256);
+    porg = palloc(size + alignment);
+    p = (void *)((((uint64)porg + alignment) / alignment) * alignment);
+    *((unsigned char *)p-1) = (unsigned char)((uint64)p - (uint64)porg);
+    return p;
+}
+
+void
+pg_aligned_free(void *memblock) {
+    void *porg;
+    if (memblock == NULL)
+        return;
+    porg = (void *)((uint64)memblock - *((unsigned char *)memblock-1));
+    if (porg == memblock)
+        porg = (void *)((uint64)porg - 256);
+    pfree(porg);
+}
+
+void*
+pg_realloc(void* p, size_t new_sz) {
+    return p==NULL ? palloc(new_sz) : repalloc(p,new_sz);
+}
+
+void*
+pg_calloc(size_t n_elements, size_t element_size) {
+    return palloc0(n_elements*element_size);
+}
+
+void
+pg_free(void* p) {
+    return p==NULL ? free(p) : pfree(p);
+}
 
 bool
 ArrayContainsNulls(ArrayType *array) {

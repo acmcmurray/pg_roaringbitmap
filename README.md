@@ -21,7 +21,7 @@ Roaring bitmaps are compressed bitmaps which tend to outperform conventional com
 	sudo make install
 	psql -c "create extension roaringbitmap"
 
-Note:You can use `make -f Makefile_native` instead of` make` to let the compiler use the SIMD instructions if it's supported by your CPU. In some scenarios, it may double the performance. But if you copy the `pg_roaringbitmap` binary which builded on machine with SIMD support to other machine without SIMD and run, you could get a SIGILL crash.
+Note: You can use `make -f Makefile_native` instead of `make` to let the compiler use the SIMD instructions if it's supported by your CPU. In some scenarios, it may double the performance. But if you copy the `pg_roaringbitmap` binary which was built on a machine with SIMD support to another machine without SIMD and run it, you could get a SIGILL crash.
 
 ## Test
 
@@ -29,13 +29,13 @@ Note:You can use `make -f Makefile_native` instead of` make` to let the compiler
 
 # Usage
 
-## about roaringbitmap data type
+## About roaringbitmap data type
 
 Logically, you could think of roaringbitmap data type as `bit(4294967296)`, and it should be noted that
 the integers added to bitmaps is considered to be unsigned. Within bitmaps, numbers are ordered according to uint32. We order the numbers like 0, 1, ..., 2147483647, -2147483648, -2147483647,..., -1. But we use bigint to
 reference the range of these integers, that is [0 4294967296).
 
-## input and ouput
+## Input and output
 
 Support two kind of input/output syntax 'array' and 'bytea',
 The default output format is 'bytea'.
@@ -115,10 +115,10 @@ or
 
 	SELECT rb_iterate('{1,2,3}'::roaringbitmap);
 
-## Opperator List
+## Operator List
 <table>
     <thead>
-           <th>Opperator</th>
+           <th>Operator</th>
            <th>Input</th>
            <th>Output</th>
            <th>Desc</th>
@@ -277,7 +277,7 @@ or
         <td><code>rb_index</code></td>
         <td><code>roaringbitmap,integer</code></td>
         <td><code>bigint</code></td>
-        <td>Return the 0-based index of element in this roaringbitmap, or -1 if do not exsits</td>
+        <td>Return the 0-based index of element in this roaringbitmap, or -1 if do not exists</td>
         <td><code>rb_index('{1,2,3}',3)</code></td>
         <td><code>2</code></td>
     </tr>
@@ -422,7 +422,7 @@ or
         <td><code>roaringbitmap</code></td>
         <td><code>SET of integer</code></td>
         <td>Return set of integer from a roaringbitmap data.</td>
-        <td><pre>rb_iterate(roaringbitmap('{1,2,3}'))</pre></td>
+        <td><code>rb_iterate(roaringbitmap('{1,2,3}'))</code></td>
         <td><pre>1
 2
 3</pre></td>
